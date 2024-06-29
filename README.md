@@ -1,19 +1,7 @@
 # 🚀 Quicksell Kanban Issue Tracker
 
 Welcome to the Quick Kanban Issue Tracker! This interactive Kanban board application helps you manage and track tasks efficiently by providing dynamic grouping and sorting options. The app is designed to interact with a provided API to fetch and display tickets in an organized manner.
-
-## 📋 Table of Contents
-
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [Installation](#installation)
-- [Usage](#usage)
-- [API Integration](#api-integration)
-- [Grouping Options](#grouping-options)
-- [Sorting Options](#sorting-options)
-- [Priority Levels](#priority-levels)
-- [Contributing](#contributing)
-- [License](#license)
+[Try Here](https://kanban-board-virid-seven.vercel.app/)
 
 ## 🚀 Features
 
@@ -40,7 +28,3 @@ Welcome to the Quick Kanban Issue Tracker! This interactive Kanban board applica
 2. Click on the "display" button to select your desired grouping option.
 3. Use the sorting options to organize the tickets as needed.
 4. View and manage tickets based on your preferences.
-
-## 🌐 API Integration
-
-The application interacts with the API provided at: [https://api.quicksell.co/v1/internal/frontend-assignment](https://api.quicksell.co/v1/internal/frontend-assignment).
