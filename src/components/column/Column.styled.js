@@ -44,7 +44,7 @@ export const ColumnActions = styled.div`
   }
 `;
 
-export const KanbanTickets = styled.div`
+export const TicketListStyled = styled.div`
   margin-top: 10px;
 `;
 

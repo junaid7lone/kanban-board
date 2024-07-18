@@ -6,6 +6,7 @@ import { theme } from "./styles/theme";
 import "./App.css";
 import { ICONS } from "./constants/icons";
 import useFetch from "./hooks/useFetch";
+import { getGroupedTickets, sortTickets } from "./utils/kanbanUtils";
 
 const App = () => {
   const [tickets, setTickets] = useState([]);
@@ -21,10 +22,8 @@ const App = () => {
 
   useEffect(() => {
     if (data) {
-      const ticketsData = data.tickets;
-      const usersData = data.users;
-      setTickets(ticketsData);
-      setUsers(usersData);
+      setTickets(data.tickets);
+      setUsers(data.users);
     }
   }, [data]);
 
@@ -36,10 +35,30 @@ const App = () => {
     localStorage.setItem("sortBy", sortBy);
   }, [sortBy]);
 
+  const handleDragEnd = (ticketId, newGroup) => {
+    setTickets((prevTickets) => {
+      const updatedTickets = prevTickets.map((ticket) =>
+        ticket.id === ticketId
+          ? groupBy === "user"
+            ? { ...ticket, userId: newGroup }
+            : { ...ticket, [groupBy]: newGroup }
+          : ticket
+      );
+
+      const groupedTickets = getGroupedTickets(updatedTickets, groupBy);
+
+      Object.keys(groupedTickets).forEach((group) => {
+        groupedTickets[group] = sortTickets(groupedTickets[group], sortBy);
+      });
+
+      return updatedTickets;
+    });
+  };
+
   if (loading) {
     return (
       <div className="loader-wrapper">
-        <img src={ICONS.LOADER} alt="..." className="loader-img" />
+        <img src={ICONS.LOADER} alt="Loading..." className="loader-img" />
       </div>
     );
   }
@@ -63,6 +82,7 @@ const App = () => {
           users={users}
           groupBy={groupBy}
           sortBy={sortBy}
+          onDragEnd={handleDragEnd}
         />
       </main>
     </ThemeProvider>

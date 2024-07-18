@@ -1,13 +1,14 @@
 import React from "react";
 import Card from "../card/Card";
 import { getPriority } from "../../utils/priority";
-import { KanbanColumn, KanbanTickets, NoTicketsMessage } from "./Column.styled";
+import {
+  KanbanColumn,
+  TicketListStyled,
+  NoTicketsMessage,
+} from "./Column.styled";
 import { ColumnHeader } from "./ColumnHeader";
 
-function Column(props) {
-  const { group, groupBy, userMap, groupedTickets, sortTickets, sortBy } =
-    props;
-  const groupedData = sortTickets(groupedTickets[group], sortBy);
+function Column({ group, groupBy, userMap, tickets, onDragEnd }) {
   const columnTitle =
     groupBy === "user"
       ? userMap[group]
@@ -15,30 +16,34 @@ function Column(props) {
       ? getPriority(group)
       : group;
 
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const ticketId = e.dataTransfer.getData("text/plain");
+    onDragEnd(ticketId, group);
+  };
+
   return (
-    <KanbanColumn key={group}>
+    <KanbanColumn key={group} onDragOver={handleDragOver} onDrop={handleDrop}>
       <ColumnHeader
         title={columnTitle}
-        count={groupedData.length}
+        count={tickets.length}
         iconType={groupBy}
       />
 
-      <KanbanTickets>
-        {groupedData.length ? (
-          groupedData.map((ticket) => (
-            <Card
-              key={ticket.id}
-              ticket={ticket}
-              sortBy={sortBy}
-              groupBy={groupBy}
-            />
+      <TicketListStyled>
+        {tickets.length ? (
+          tickets.map((ticket) => (
+            <Card key={ticket.id} ticket={ticket} groupBy={groupBy} />
           ))
         ) : (
           <NoTicketsMessage>No Tickets</NoTicketsMessage>
         )}
-      </KanbanTickets>
+      </TicketListStyled>
     </KanbanColumn>
   );
 }
-
 export default Column;

@@ -1,12 +1,14 @@
 import styled from "styled-components";
 
 export const CardContainer = styled.div`
-  background-color: ${({ theme }) => theme.colors.cardBackground};
+  background-color: ${({ theme, isDragging }) =>
+    isDragging ? "#ddd" : theme.colors.cardBackground};
   border: 1px solid ${({ theme }) => theme.colors.borderLight};
   box-shadow: 0 0px 6px rgba(0, 0, 0, 0.1);
   border-radius: ${({ theme }) => theme.borderRadius.medium};
   padding: 16px;
   margin-bottom: 10px;
+  cursor: ${({ isDragging }) => (isDragging ? "grab" : "default")};
 `;
 
 export const TicketId = styled.div`

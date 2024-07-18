@@ -20,7 +20,7 @@ const Avatar = ({ imageUrl, name, status, size }) => {
       {imageUrl ? (
         <AvatarImage src={imageUrl} alt={name} />
       ) : (
-        <Initials size={size}>{initials}</Initials>
+        <Initials size={parseInt(size)}>{initials}</Initials>
       )}
       <StatusIndicator status={status} />
     </AvatarContainer>
